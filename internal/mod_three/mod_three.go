@@ -1,23 +1,38 @@
 package modthree
 
+type State int
+
+const (
+	S0 State = 0
+	S1 State = 1
+	S2 State = 2
+)
+
 func ModThree(s string) int {
-	return bStringToInt(s) % 3
+	state := S0
+	for _, c := range s {
+		state = stateTransition(state, c)
+	}
+	return int(state)
 }
 
-// bStringToInt converts a string of 0s and 1s to an integer.
-// Any non '0' or '1' characters are skipped.
-func bStringToInt(s string) int {
-	var n int
-	for i := 0; i < len(s); i++ {
-		c := s[i]
+func stateTransition(state State, c rune) State {
+	switch state {
+	case S0:
 		if c == '0' {
-			n = n << 1
-		} else if c == '1' {
-			n = (n << 1) + 1
-		} else {
-			// ignore any non-binary character
-			continue
+			return S0
 		}
+		return S1
+	case S1:
+		if c == '0' {
+			return S2
+		}
+		return S0
+	case S2:
+		if c == '0' {
+			return S1
+		}
+		return S2
 	}
-	return n
+	return state
 }
