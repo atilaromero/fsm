@@ -1,4 +1,4 @@
-package modthree
+package fsm_generator
 
 import "fmt"
 
