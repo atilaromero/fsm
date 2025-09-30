@@ -1,3 +1,3 @@
-module github.com/atilaromero/mod_three
+module github.com/atilaromero/fsm
 
 go 1.24.3

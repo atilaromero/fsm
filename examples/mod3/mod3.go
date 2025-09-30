@@ -1,6 +1,6 @@
 package mod3
 
-import fsm "github.com/atilaromero/mod_three"
+import fsm "github.com/atilaromero/fsm"
 
 type Mod3State int
 

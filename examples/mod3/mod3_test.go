@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/atilaromero/mod_three/examples/mod3"
+	"github.com/atilaromero/fsm/examples/mod3"
 )
 
 func ModThree(s string) (int, error) {

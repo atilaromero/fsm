@@ -3,7 +3,7 @@ package fsm_test
 import (
 	"fmt"
 
-	fsm "github.com/atilaromero/mod_three"
+	fsm "github.com/atilaromero/fsm"
 )
 
 func ExampleFSM() {
