@@ -1,12 +1,18 @@
 // Package fsm_generator provides a generic framework for building and executing
 // Finite State Machines (FSMs) with type-safe states and alphabets.
+//
 // A finite automaton (FA) is a 5-tuple (Q,A,q0,validFinalQ, tf) where,
 //
 // Q is a finite set of states;
+//
 // A is a finite input alphabet;
+//
 // q0 ∈ Q is the initial state;
+//
 // validFinalQ ⊆ Q is the set of accepting/final states; and
+//
 // tf:Q×A→Q is the transition function.
+//
 // For any element q of Q and any symbol a∈A, we interpret tf(q,a) as the state to which the FA
 // moves, if it is in state q and receives the input a.
 package fsm
