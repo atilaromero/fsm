@@ -5,6 +5,18 @@ import (
 	"testing"
 )
 
+func TestModThreeError(t *testing.T) {
+	table := []string{
+		"10101019",
+	}
+	for _, tt := range table {
+		_, err := ModThree(tt)
+		if err == nil {
+			t.Errorf("ModThree(%q) = nil, want error", tt)
+		}
+	}
+}
+
 func TestModThreeString(t *testing.T) {
 	table := []string{
 		"0",
@@ -16,7 +28,11 @@ func TestModThreeString(t *testing.T) {
 	}
 	for _, tt := range table {
 		want := bStringToInt(tt) % 3
-		if got := ModThree(tt); got != want {
+		got, err := ModThree(tt)
+		if err != nil {
+			t.Errorf("ModThree(%q) failed with error %v", tt, err)
+		}
+		if got != want {
 			t.Errorf("ModThree(%q) = %d, want %d", tt, got, want)
 		}
 	}
@@ -31,14 +47,20 @@ func TestModThreeInt(t *testing.T) {
 		5,
 	}
 	for _, tt := range table {
-		got := ModThree(intToBString(tt))
+		got, err := ModThree(intToBString(tt))
+		if err != nil {
+			t.Errorf("ModThree(%q) failed with error %v", tt, err)
+		}
 		want := tt % 3
 		if got != want {
 			t.Errorf("ModThree(%q) = %d, want %d", tt, got, want)
 		}
 	}
 	for tt := 0; tt < 100; tt++ {
-		got := ModThree(intToBString(tt))
+		got, err := ModThree(intToBString(tt))
+		if err != nil {
+			t.Errorf("ModThree(%q) failed with error %v", tt, err)
+		}
 		want := tt % 3
 		if got != want {
 			t.Errorf("ModThree(%q) = %d, want %d", tt, got, want)

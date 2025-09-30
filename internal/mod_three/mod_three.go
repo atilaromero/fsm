@@ -1,5 +1,7 @@
 package modthree
 
+import "fmt"
+
 type State int
 
 const (
@@ -8,12 +10,15 @@ const (
 	S2 State = 2
 )
 
-func ModThree(s string) int {
+func ModThree(s string) (int, error) {
 	state := S0
 	for _, c := range s {
+		if c != '0' && c != '1' {
+			return 0, fmt.Errorf("ModThree: invalid character %c", c)
+		}
 		state = stateTransition(state, c)
 	}
-	return int(state)
+	return int(state), nil
 }
 
 func stateTransition(state State, c rune) State {
