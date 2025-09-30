@@ -12,6 +12,7 @@ func ExampleFSM() {
 		return c == '0' || c == '1'
 	}
 
+	// The states of the FSM
 	type MyState int
 	const (
 		MyState0 = 0
@@ -19,6 +20,7 @@ func ExampleFSM() {
 		MyState2 = 2
 	)
 
+	// The alphabet of the FSM, the valid characters that can be processed
 	type MyAlphabet rune
 	const (
 		MyAlphabet0 = '0'
