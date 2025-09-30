@@ -1,9 +1,22 @@
-package fsm_generator
+package mod3_test
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/atilaromero/mod_three/examples/mod3"
 )
+
+func ModThree(s string) (int, error) {
+	isValidRune := func(c rune) bool {
+		return c == '0' || c == '1'
+	}
+	var q, err = mod3.NewMod3FSM().ProcessInput(s, isValidRune)
+	if err != nil {
+		return 0, err
+	}
+	return int(q), nil
+}
 
 func TestModThreeError(t *testing.T) {
 	table := []string{
@@ -73,6 +86,24 @@ func intToBString(n int) string {
 	return binaryStr
 }
 
+// bStringToInt converts a string of 0s and 1s to an integer.
+// Any non '0' or '1' characters are skipped.
+func bStringToInt(s string) int {
+	var n int
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if c == '0' {
+			n = n << 1
+		} else if c == '1' {
+			n = (n << 1) + 1
+		} else {
+			// ignore any non-binary character
+			continue
+		}
+	}
+	return n
+}
+
 func TestBStringToInt(t *testing.T) {
 	table := []struct {
 		in   string
@@ -91,22 +122,4 @@ func TestBStringToInt(t *testing.T) {
 			t.Errorf("bStringToInt(%q) = %d, want %d", tt.in, got, tt.want)
 		}
 	}
-}
-
-// bStringToInt converts a string of 0s and 1s to an integer.
-// Any non '0' or '1' characters are skipped.
-func bStringToInt(s string) int {
-	var n int
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if c == '0' {
-			n = n << 1
-		} else if c == '1' {
-			n = (n << 1) + 1
-		} else {
-			// ignore any non-binary character
-			continue
-		}
-	}
-	return n
 }

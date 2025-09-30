@@ -9,7 +9,7 @@
 // tf:Q×A→Q is the transition function.
 // For any element q of Q and any symbol a∈A, we interpret tf(q,a) as the state to which the FA
 // moves, if it is in state q and receives the input a.
-package fsm_generator
+package fsm
 
 import "fmt"
 
@@ -23,8 +23,6 @@ type QStates interface {
 // Alphabets must have an underlying type of rune and provide validation.
 type Alphabet interface {
 	~rune
-	// isValid checks if a given rune is a valid member of this alphabet.
-	isValid(c rune) bool
 }
 
 // TransitionFunction defines the state transition logic for a finite state machine.
@@ -34,7 +32,6 @@ type TransitionFunction[Q QStates, A Alphabet] func(Q, A) Q
 // FSM represents a generic Finite State Machine with parameterized state and alphabet types.
 type FSM[Q QStates, A Alphabet] struct {
 	Q           Q                        // Current state
-	A           A                        // Alphabet instance (used for validation)
 	Q0          Q                        // Initial state
 	ValidFinalQ []Q                      // Set of valid accepting/final states
 	tf          TransitionFunction[Q, A] // State transition function
@@ -56,10 +53,10 @@ func NewFSM[Q QStates, A Alphabet](q0 Q, validFinalQ []Q, tf TransitionFunction[
 // ProcessInput processes a string input through the FSM, transitioning states
 // according to the transition function. Returns the final state and any error
 // encountered during processing (e.g., invalid input character).
-func (f FSM[Q, A]) ProcessInput(input string) (Q, error) {
+func (f FSM[Q, A]) ProcessInput(input string, isValid func(rune) bool) (Q, error) {
 	for _, c := range input {
 		// Validate each character against the alphabet
-		if !f.A.isValid(c) {
+		if !isValid(c) {
 			return f.Q, fmt.Errorf("FSM.ProcessInput: invalid alphabet %c", c)
 		}
 		// Convert rune to alphabet type and transition

@@ -1,4 +1,6 @@
-package fsm_generator
+package mod3
+
+import fsm "github.com/atilaromero/mod_three"
 
 type Mod3State int
 
@@ -14,10 +16,6 @@ const (
 	A0 Mod3Alphabet = '0'
 	A1 Mod3Alphabet = '1'
 )
-
-func (a Mod3Alphabet) isValid(c rune) bool {
-	return c == '0' || c == '1'
-}
 
 func tf(q Mod3State, a Mod3Alphabet) Mod3State {
 	switch q {
@@ -40,6 +38,7 @@ func tf(q Mod3State, a Mod3Alphabet) Mod3State {
 	return q
 }
 
-func NewMod3FSM() *FSM[Mod3State, Mod3Alphabet] {
-	return NewFSM(S0, []Mod3State{S0, S1, S2}, tf)
+// NewMod3FSM shows an example of how to use the FSM generator
+func NewMod3FSM() *fsm.FSM[Mod3State, Mod3Alphabet] {
+	return fsm.NewFSM(S0, []Mod3State{S0, S1, S2}, tf)
 }
